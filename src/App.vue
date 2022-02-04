@@ -1,13 +1,14 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
+    <router-link to="/">
+      <img class="logo" src="./assets/marvel-logo.png" alt="Marvel logo">
+    </router-link> 
     <router-link to="/about">About</router-link>
   </div>
   <router-view/>
 </template>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,15 +18,24 @@
 }
 
 #nav {
-  padding: 20px;
+  padding: 10px 45px 5px 28px;
+  background: #333;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #FFF;
+  
 }
 
 #nav a.router-link-exact-active {
-  color: #c73535;
+  color: #ec2a25;
+}
+.logo{
+  height: 50px;
 }
 </style>
