@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <form @submit.prevent="apiCall">
+    <form @submit.prevent="validate">
       <label for="input-1">Find your favorite marvel character</label>
-      <input type="text" placeholder="Character" id="input-1" v-model="name">
+      <input type="text" placeholder="Character" id="input-1" v-model.trim="name">
       <button type="submit">Search</button>
     </form>
 
@@ -48,13 +48,19 @@ export default {
       try{
         const call = await fetch(`http://gateway.marvel.com/v1/public/characters?name=${this.name}&${this.accessHash}`)
         const response = await call.json();
-        console.log(response.data)
-        this.character = response.data.results[0];
-        console.log(this.character)
-        this.search = true
-        
+        if(response.data.total > 0){
+          this.character = response.data.results[0];
+          this.search = true
+        }else{
+          this.search = false
+        }
       }catch(error){
         console.log(error)
+      }
+    },
+    validate(){
+      if(this.name != ''){
+        this.apiCall()
       }
     }
   }
