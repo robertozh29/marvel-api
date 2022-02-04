@@ -7,11 +7,7 @@
 </template>
 
 <style>
-body{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +17,7 @@ body{
 }
 
 #nav {
-  padding: 30px;
+  padding: 20px;
 }
 
 #nav a {
@@ -30,6 +26,6 @@ body{
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #c73535;
 }
 </style>

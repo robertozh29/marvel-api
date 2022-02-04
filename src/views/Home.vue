@@ -2,18 +2,22 @@
   <div class="home">
     <form @submit.prevent="apiCall">
       <label for="input-1">Find your favorite marvel character</label>
-      <input type="text" placeholder="Character" id="input-1" v-model="character">
+      <input type="text" placeholder="Character" id="input-1" v-model="name">
       <button type="submit">Search</button>
     </form>
 
-    <img v-if="img" alt="Character logo" :src="img">
+    <character-card 
+      v-if="search" 
+      :name="this.character.name"
+      :img="this.character.thumbnail.path + '.' + this.character.thumbnail.extension"
+    />
     <div v-else class="pre">
-      <p>The character search has to have the next format:</p>
+      <p>Character search must have the next format:</p>
       <ul>
         <li>Full name with spaces</li>
         <li>No abbrevations</li>
-        <li>English names</li>
-        <li>Don't the article 'the'</li>
+        <li>Don't use the article 'the'</li>
+        <li>Only english names</li>
       </ul>
       <i>There are characters like: spiderman, that wont show up because of copyrights or API records</i>
     </div>
@@ -21,31 +25,34 @@
 </template>
 
 <script>
+import CharacterCard from '../components/CharacterCard.vue'
 // ts: 1
 // Public key: 432a5a46f203913911135c4accec3a14
 // Private key: d91cf0759cbff952115965dd6a4aa9c655dc7140
-// String: 1d91cf0759cbff952115965dd6a4aa9c655dc7140432a5a46f203913911135c4accec3a14
-// Hash: 
 
 export default {
   name: 'Home',
   components: {
-
+    CharacterCard
   },
   data(){
     return{
-      character: '',
       accessHash: 'ts=1&apikey=432a5a46f203913911135c4accec3a14&hash=341c41503a596deefc5e2ff9e8b1117f',
-      img: ''
+      name: '',
+      character: {},
+      search: false
     }
   },
   methods:{
     async apiCall(){
       try{
-        const call = await fetch(`http://gateway.marvel.com/v1/public/characters?name=${this.character}&${this.accessHash}`)
+        const call = await fetch(`http://gateway.marvel.com/v1/public/characters?name=${this.name}&${this.accessHash}`)
         const response = await call.json();
         console.log(response.data)
-        this.img = response.data.results[0].thumbnail.path + '.jpg'
+        this.character = response.data.results[0];
+        console.log(this.character)
+        this.search = true
+        
       }catch(error){
         console.log(error)
       }
@@ -54,39 +61,47 @@ export default {
 }
 </script>
 
-<style>
-form{
-  width: 300px;
-  margin: 15px auto;
+<style scoped>
+.home{
+  width: 350px;
+  margin: auto; 
+  display:flex;
+  flex-direction:column;
+  align-items: center;
 }
-
+form{
+  width: 100%;
+  margin: 15px;
+}
 form label{
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
 }
-
 form input[type="text"]{
-  width: 75%;
+  width: 80%;
+  box-sizing: border-box;
+  padding: 3px 10px;
 }
-
 form button{
   width: 20%;
-}
-
-
-
-img{
-  width: 300px;
-  height: 300px;
+  padding: 3px 0;
 }
 
 .pre{
-  margin: 50px auto;
+  margin: 10px auto;
   width: 320px;
   text-align: center;
   font-size: 14px;
 }
+.pre p{
+  font-size: 16px;
+  margin-bottom: 5px;
+}
 
+.pre ul{
+  padding-left:25px;
+  padding-bottom: 15px;
+}
 li{
   text-align: left;
 }
