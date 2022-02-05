@@ -46,7 +46,7 @@ export default {
   methods:{
     async apiCall(){
       try{
-        const call = await fetch(`http://gateway.marvel.com/v1/public/characters?name=${this.name}&${this.accessHash}`)
+        const call = await fetch(`https://gateway.marvel.com/v1/public/characters?name=${this.name}&${this.accessHash}`)
         const response = await call.json();
         if(response.data.total > 0){
           this.character = response.data.results[0];
