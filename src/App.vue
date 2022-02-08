@@ -33,7 +33,7 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #ec2a25;
+  color: #df635f;
 }
 .logo{
   height: 50px;
